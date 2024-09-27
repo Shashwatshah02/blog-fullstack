@@ -1,4 +1,34 @@
 import Blog from "../models/blogModels.js";
+import multer from "multer";
+import path from "path";
+
+const storage = multer.diskStorage({
+  destination: "./uploads/",
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 }, // Limit file size to 1MB
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png|gif/; // Accepted file types
+    const extname = filetypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb("Error: Images Only!");
+    }
+  },
+}).single("image");
 
 const blogController = {
   getAllBlogs: async (req, res) => {
@@ -32,19 +62,28 @@ const blogController = {
     }
   },
   createBlog: async (req, res) => {
-    try {
-      const { title, content, categoryId } = req.body;
-
-      if (title === undefined || content === undefined) {
-        return res.status(400).json({ error: "All fields are required" });
+    upload(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err });
       }
-
-      await Blog.createBlog(title, content, categoryId);
-      // res.status(201).json({ id: result.insertId, title, content, categoryId });
-      res.redirect("/api/blogs/all");
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+      console.log(req.file);
+      const { title, content, categoryId } = req.body;
+      const imageUrl = req.file ? req.file.path : null;
+      console.log(imageUrl)
+      try {
+        if (title === undefined || content === undefined) {
+          return res.status(400).json({ error: "All fields are required" });
+        }
+        if (!imageUrl) {
+          return res.status(400).json({ error: "Image upload is required!" });
+        }
+        await Blog.createBlog(title, content, categoryId, imageUrl);
+        // res.status(201).json({ id: result.insertId, title, content, categoryId });
+        res.redirect("/api/blogs/all");
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
   },
   deleteBlogbyId: async (req, res) => {
     const blogId = req.params.id;
@@ -60,10 +99,10 @@ const blogController = {
     try {
       const blog = await Blog.getBlogById(blogId);
       const categories = await Blog.getAllCategories();
-      if (blog, categories) {
+      if ((blog, categories)) {
         // console.log(blog[0])
-        console.log(categories)
-        res.render("editBlog", { blog: blog[0], categories: categories});
+        console.log(categories);
+        res.render("editBlog", { blog: blog[0], categories: categories });
       } else {
         res.status(404).json({ message: "Blog post not found" });
       }
@@ -72,14 +111,22 @@ const blogController = {
     }
   },
   updateBlog: async (req, res) => {
-    const blogId = req.params.id;
-    const { title, content, categoryId } = req.body;
-    try {
-      await Blog.updateBlog(blogId, { title, content, categoryId });
-      res.redirect("/api/blogs/all"); // Redirect to all blogs after successful update
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    upload(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      const blogId = req.params.id;
+      console.log(req.file);
+      const { title, content, categoryId } = req.body;
+      const imageUrl = req.file ? req.file.path : null;
+      console.log(imageUrl)
+      try {
+        await Blog.updateBlog(blogId, { title, content, categoryId, imageUrl });
+        res.redirect("/api/blogs/all"); // Redirect to all blogs after successful update
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
   },
   // You can add more controller functions here as needed
 };

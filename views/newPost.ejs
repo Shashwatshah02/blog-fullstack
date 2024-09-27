@@ -122,7 +122,7 @@
       <h1>Add a New Blog Post</h1>
 
       <!-- The form to submit new blog posts -->
-      <form action="/api/blogs/create" method="POST">
+      <form action="/api/blogs/create" method="POST" enctype="multipart/form-data">
         <!-- Input for the blog post title -->
         <label for="title">Title:</label>
         <input
@@ -151,7 +151,8 @@
           </option>
           <% }) %>
         </select>
-
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
         <!-- Submit button to create the post -->
         <button type="submit">Create Post</button>
       </form>

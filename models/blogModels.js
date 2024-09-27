@@ -2,15 +2,15 @@ import { db } from "../db.js";
 
 const getAllBlogs = async () => {
   const [result] = await db.execute(`
-  SELECT blogs.blogId, blogs.title, blogs.content, categories.categoryName
+  SELECT blogs.blogId, blogs.title, blogs.content, blogs.imageUrl, categories.categoryName
   FROM blogs
   JOIN categories ON blogs.categoryId = categories.categoryId
 `);
   return result;
 };
 
-const createBlog = async (title, content, categoryId)=>{
-  const [result] = await db.execute("INSERT INTO blogs (title, content, categoryId) VALUES (?, ?, ?)", [title, content, categoryId])
+const createBlog = async (title, content, categoryId, imageUrl)=>{
+  const [result] = await db.execute("INSERT INTO blogs (title, content, categoryId, imageUrl) VALUES (?, ?, ?, ?)", [title, content, categoryId, imageUrl])
   return result;
  }
 
@@ -44,8 +44,8 @@ const deleteBlogById = async(blogId) =>{
 }
 }
 const updateBlog = async (blogId, updatedBlog) => {
-  const {title, content, categoryId} = updatedBlog
-  const [result] = await db.execute('UPDATE blogs SET title = ?, content = ?, categoryId = ? WHERE blogId = ?', [title, content, categoryId, blogId]);
+  const {title, content, categoryId, imageUrl} = updatedBlog
+  const [result] = await db.execute('UPDATE blogs SET title = ?, content = ?, categoryId = ?, imageUrl = ? WHERE blogId = ?', [title, content, categoryId, imageUrl, blogId]);
   return result;
 }
 

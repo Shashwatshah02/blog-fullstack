@@ -134,7 +134,7 @@
 <body>
     <div class="container">
         <h1>Edit Blog Post</h1>
-        <form action="/api/blogs/update/<%= blog[0].blogId %>" method="POST">
+        <form action="/api/blogs/update/<%= blog[0].blogId %>" method="POST" enctype="multipart/form-data">
             <!-- Title Input -->
             <div>
                 <label for="title">Title:</label>
@@ -160,7 +160,8 @@
                 </select>
             </div>
             
-
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
             <!-- Submit Button -->
             <button type="submit">Update Blog</button>
         </form>

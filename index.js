@@ -1,26 +1,33 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import { getConnection } from './db.js'; // Importing the connection function
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import path from "path";
+import { getConnection } from "./db.js"; // Importing the connection function
 // import userRoutes from "./routes/userRoutes.js"
-import blogRoutes from "./routes/blogRoutes.js"
+import { fileURLToPath } from 'url';
+import blogRoutes from "./routes/blogRoutes.js";
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json()); // Allows parsing JSON in request body
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Test route to check if the server is running
-app.get('/test', (req, res) => {
-    res.json({ message: 'Server is working!' });
+app.get("/test", (req, res) => {
+  res.json({ message: "Server is working!" });
 });
 
 //Serve static files using Express
-app.use(express.static('public'));
+ // Serve uploaded images
 
 // app.get('/api/users', userRoutes)
-app.use('/api/blogs', blogRoutes)
+app.use("/api/blogs", blogRoutes);
 
 // // A route to fetch users from the MySQL database
 // app.get('/users', async (req, res) => {
@@ -37,5 +44,5 @@ app.use('/api/blogs', blogRoutes)
 
 // Start the server
 app.listen(8800, () => {
-    console.log('Server running on port 8800');
+  console.log("Server running on port 8800");
 });
