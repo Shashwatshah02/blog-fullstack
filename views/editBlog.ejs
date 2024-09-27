@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Blog - <%= blog[0].title %></title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Form Container */
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Input and Textarea Styling */
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #f4f7f6;
+            color: #333; /* Ensure text is visible */
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Style for options to ensure visibility */
+        select, option {
+            color: #333; /* Text color for dropdown */
+            background-color: #fff; /* Background color for dropdown options */
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select:focus {
+            border-color: #007bff;
+        }
+
+        option {
+            background-color: #fff; /* Background color for options */
+            color: #333; /* Text color for options */
+        }
+
+        /* Submit and Cancel Buttons */
+        button, .back-button {
+            padding: 12px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+        }
+
+        button:hover, .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #6c757d;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsive Adjustments */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Blog Post</h1>
+        <form action="/api/blogs/update/<%= blog[0].blogId %>" method="POST">
+            <!-- Title Input -->
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="<%= blog[0].title %>" required>
+            </div>
+
+            <!-- Content Input -->
+            <div>
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" rows="10" required><%= blog[0].content %></textarea>
+            </div>
+
+            <!-- Category Dropdown -->
+            <div>
+                <label for="category">Category:</label>
+                <select id="category" name="categoryId" required>
+                    <option value="">Select a category</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category.categoryId %>" <%= blog[0].categoryId === category.categoryId ? 'selected' : '' %>>
+                            <%= category.categoryName %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            
+
+            <!-- Submit Button -->
+            <button type="submit">Update Blog</button>
+        </form>
+
+        <!-- Cancel / Back Button -->
+        <a href="/api/blogs/all" class="back-button">Cancel</a>
+    </div>
+</body>
+</html>

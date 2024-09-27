@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Post</title>
+    <link rel="stylesheet" href="/style.css" />
+
+    <style>
+      /* Styling the form for a clean and modern look */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 0;
+        margin: 0;
+        background-color: #f4f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.2em;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+      }
+
+      .form-container {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        max-width: 600px;
+        width: 100%;
+        animation: fadeIn 0.8s ease;
+      }
+
+      /* Form input styles */
+      label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: 500;
+        color: #34495e;
+        font-size: 1em;
+      }
+
+      input[type="text"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #dcdfe3;
+        border-radius: 8px;
+        font-size: 1em;
+        color: #34495e;
+        transition: border 0.3s ease;
+        background-color: #f9fafc;
+      }
+
+      input[type="text"]:focus,
+      textarea:focus,
+      select:focus {
+        border: 1px solid #3498db;
+        outline: none;
+      }
+
+      textarea {
+        height: 120px;
+        resize: none;
+      }
+
+      /* Submit button styling */
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      a {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        color: #3498db;
+        text-decoration: none;
+        font-size: 1em;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #2980b9;
+      }
+
+      /* Simple fade-in animation for the form container */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Add a New Blog Post</h1>
+
+      <!-- The form to submit new blog posts -->
+      <form action="/api/blogs/create" method="POST">
+        <!-- Input for the blog post title -->
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          required
+          placeholder="Enter the title here..."
+        />
+
+        <!-- Text area for the blog post content -->
+        <label for="content">Content:</label>
+        <textarea
+          id="content"
+          name="content"
+          required
+          placeholder="Write your content here..."
+        ></textarea>
+
+        <!-- Dropdown for selecting category -->
+        <label for="categoryId">Category:</label>
+        <select id="categoryId" name="categoryId" required>
+          <% categories.forEach(category => { %>
+          <option value="<%= category.categoryId %>">
+            <%= category.categoryName %>
+          </option>
+          <% }) %>
+        </select>
+
+        <!-- Submit button to create the post -->
+        <button type="submit">Create Post</button>
+      </form>
+
+      <a href="/api/blogs/all">View All Posts</a>
+    </div>
+  </body>
+</html>
