@@ -4,6 +4,9 @@ import blogController from "../controller/blogController.js";
 const router = express.Router();
 
 router.get('/all', blogController.getAllBlogs);
+router.get('/categories', blogController.getAllCategories)
+router.post('/categories', blogController.addCategories)
+router.get('/categories/delete/:id', blogController.deleteCategorybyId)
 router.post('/create', blogController.createBlog);
 router.get('/create', blogController.getCreateBlogPage);
 router.get('/view/:id', blogController.getBlogById);

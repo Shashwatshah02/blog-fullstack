@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Categories</title>
+    <link rel="stylesheet" href="/style.css" />
+    <!-- Assuming your main dashboard CSS is linked here -->
+    <style>
+      /* General Styling */
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 900px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        border-radius: 10px;
+        margin: 30px 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .form-group input {
+        padding: 10px;
+        width: 80%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .form-group button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .form-group button:hover {
+        background-color: #0056b3;
+      }
+
+      .category-list {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* For a two-column layout */
+        gap: 20px;
+      }
+
+      .category-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1rem;
+      }
+
+      .category-name {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .delete-btn:hover {
+        background-color: #c82333;
+      }
+
+      /* Back to dashboard button */
+      .back-button {
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .back-button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Manage Categories</h1>
+
+      <!-- Add New Category Form -->
+      <form id="category-form" action="/api/blogs/categories" method="POST">
+        <div class="form-group">
+          <input
+            type="text"
+            id="categoryName"
+            name="categoryName"
+            placeholder="New Category"
+            required
+          />
+          <button type="submit">Add Category</button>
+        </div>
+      </form>
+
+      <!-- Category List -->
+      <ul class="category-list" id="category-list">
+        <% categories.forEach(category => { %>
+        <li class="category-item">
+          <span class="category-name"><%= category.categoryName %></span>
+          <button
+            class="delete-btn"
+            onclick="confirmDelete('<%= category.categoryId %>')"
+          >
+            Delete
+          </button>
+        </li>
+        <% }) %>
+      </ul>
+
+      <!-- Back to Blog Dashboard -->
+      <a href="/api/blogs/all" class="back-button">Back to Blog Dashboard</a>
+    </div>
+
+<script>
+  function confirmDelete(categoryId) {
+    const userConfirmed = confirm(
+      'Deleting this category will also delete all posts associated with it. Are you sure you want to proceed?'
+    );
+
+    if (userConfirmed) {
+      // If user confirms, proceed with deletion
+      location.href = `/api/blogs/categories/delete/${categoryId}`;
+    }
+    // If the user cancels, the action is stopped, and nothing happens
+  }
+</script>
+  </body>
+</html>

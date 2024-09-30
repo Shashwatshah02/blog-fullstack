@@ -6,9 +6,9 @@ const userController = {
     try {
       const { username, password } = req.body;
       const user = await User.checkAuth(username);
-      console.log(password);
-      console.log(username);
-      console.log(user);
+      // console.log(password);
+      // console.log(username);
+      // console.log(user);
       if (!username || !password) {
         return res
           .status(400)
@@ -33,7 +33,7 @@ const userController = {
       }
     } catch (error) {
       // Handle any server-side errors
-      console.log(error);
+      // console.log(error);
       return res.status(500).json({ error: error.message });
     }
   },
