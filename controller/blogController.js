@@ -160,6 +160,12 @@ const blogController = {
       res.status(500).json({ error: error.message });
     }
   },
+  getEverything: async(req,res)=>{
+    const blogs = await Blog.getAllBlogs();
+    const categories = await Blog.getAllCategories();
+    console.log(blogs)
+    res.render("home", { blogs: blogs, categories: categories});
+  }
 };
 // You can add more controller functions here as needed
 export default blogController;

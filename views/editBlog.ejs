@@ -17,7 +17,36 @@
             margin: 0;
             padding: 20px;
         }
+        .file-input-container {
+        position: relative;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
 
+      input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dcdfe3;
+        border-radius: 8px;
+        font-size: 1em;
+        background-color: #f9fafc;
+        transition: border 0.3s ease;
+        color: #34495e;
+      }
+
+      input[type="file"]::file-selector-button {
+        padding: 10px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="file"]::file-selector-button:hover {
+        background-color: #2980b9;
+      }
         /* Form Container */
         .container {
             background-color: #ffffff;
@@ -159,9 +188,12 @@
                     <% }); %>
                 </select>
             </div>
-            
-            <label for="image">Image:</label>
-            <input type="file" id="image" name="image" accept="image/*">
+            <div class="file-input-container">
+                
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" accept="image/*">
+                
+              </div>
             <!-- Submit Button -->
             <button type="submit">Update Blog</button>
         </form>

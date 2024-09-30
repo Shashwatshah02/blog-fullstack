@@ -2,7 +2,7 @@ import { db } from "../db.js";
 
 const getAllBlogs = async () => {
   const [result] = await db.execute(`
-  SELECT blogs.blogId, blogs.title, blogs.content, blogs.imageUrl, categories.categoryName
+  SELECT blogs.blogId, blogs.title, blogs.content, blogs.imageUrl, categories.categoryName, categories.categoryId
   FROM blogs
   JOIN categories ON blogs.categoryId = categories.categoryId
 `);

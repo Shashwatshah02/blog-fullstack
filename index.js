@@ -26,9 +26,13 @@ app.set("views", path.join(__dirname, "views"));
 app.get("/test", (req, res) => {
   res.json({ message: "Server is working!" });
 });
-app.get("/", async (req, res) => {
-    res.render("home");
+// app.get("/", async (req, res) => {
+//     res.render("home");
+// });
+app.get("/about", async (req, res) => {
+  res.render("about");
 });
+app.use("/", blogRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/blogs", blogRoutes);
 // A route to fetch users from the MySQL database

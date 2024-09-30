@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/style.css" />
 
     <style>
-      /* Styling the form for a clean and modern look */
+      /* General styling */
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         padding: 0;
@@ -73,6 +73,37 @@
         resize: none;
       }
 
+      /* Styling the file input */
+      .file-input-container {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dcdfe3;
+        border-radius: 8px;
+        font-size: 1em;
+        background-color: #f9fafc;
+        transition: border 0.3s ease;
+        color: #34495e;
+      }
+
+      input[type="file"]::file-selector-button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="file"]::file-selector-button:hover {
+        background-color: #2980b9;
+      }
+
       /* Submit button styling */
       button {
         width: 100%;
@@ -90,6 +121,25 @@
         background-color: #2980b9;
       }
 
+      /* Add category button */
+      .add-category-btn {
+        background-color: #2ecc71;
+        margin-top: 15px;
+        text-align: center;
+        padding: 12px;
+        color: white;
+        font-size: 1em;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+      }
+
+      .add-category-btn:hover {
+        background-color: #27ae60;
+      }
+
       a {
         display: block;
         margin-top: 20px;
@@ -104,7 +154,7 @@
         color: #2980b9;
       }
 
-      /* Simple fade-in animation for the form container */
+      /* Simple fade-in animation */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -121,9 +171,8 @@
     <div class="form-container">
       <h1>Add a New Blog Post</h1>
 
-      <!-- The form to submit new blog posts -->
+      <!-- Blog post submission form -->
       <form action="/api/blogs/create" method="POST" enctype="multipart/form-data">
-        <!-- Input for the blog post title -->
         <label for="title">Title:</label>
         <input
           type="text"
@@ -133,7 +182,6 @@
           placeholder="Enter the title here..."
         />
 
-        <!-- Text area for the blog post content -->
         <label for="content">Content:</label>
         <textarea
           id="content"
@@ -142,7 +190,6 @@
           placeholder="Write your content here..."
         ></textarea>
 
-        <!-- Dropdown for selecting category -->
         <label for="categoryId">Category:</label>
         <select id="categoryId" name="categoryId" required>
           <% categories.forEach(category => { %>
@@ -151,12 +198,18 @@
           </option>
           <% }) %>
         </select>
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <!-- Submit button to create the post -->
+
+        <!-- Image upload input with improved styling -->
+        <div class="file-input-container">
+          <label for="image">Upload Image:</label>
+          <input type="file" id="image" name="image" accept="image/*" required />
+        </div>
+
         <button type="submit">Create Post</button>
       </form>
 
+      <!-- Button to redirect to add categories page -->
+      <!-- <a href="/api/blogs/categories/" class="add-category-btn">Add New Category</a> -->
       <a href="/api/blogs/all">View All Posts</a>
     </div>
   </body>
