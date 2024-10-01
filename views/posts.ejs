@@ -107,7 +107,7 @@
             <% posts.forEach(post => { %>
                 <tr>
                     <td><%= post.blogId %></td>
-                    <td><%= post.title %></td>
+                    <td><%= post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title %></td>
                     <td><%= post.content.length > 50 ? post.content.substring(0, 50) + '...' : post.content %></td>
                     <td><%= post.categoryName %></td> <!-- Displaying the category name -->
                     <td>

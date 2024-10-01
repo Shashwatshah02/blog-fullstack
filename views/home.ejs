@@ -407,7 +407,7 @@
       <div class="sidebar">
         <h3 style="color: #f1c40f">Recent Posts</h3>
         <ul>
-          <% blogs.forEach(blog => { %>
+          <% blogs.slice(0, 10).forEach(blog => { %>
           <li>
             <a href="/api/blogs/view/<%= blog.blogId %>"
               ><%= blog.title.substring(0, 20) %>...</a
@@ -433,8 +433,8 @@
 
       <!-- Main content -->
       <div class="main-content">
-        <div class="blogs-container">
-          <% blogs.forEach(blog => { %>
+        <div class="blogs-container" id="blogs-container">
+          <% blogs.slice(0, 10).forEach(blog => { %>
           <div class="blog-card" data-blog-id="<%= blog.categoryId %>">
             <img src="<%= blog.imageUrl %>" alt="<%= blog.title %> Image" />
             <h2 style="color: #f1c40f"><strong><%= blog.title %></strong></h2>
@@ -443,6 +443,28 @@
           </div>
           <% }) %>
         </div>
+
+        <!-- Load More button -->
+        <button
+          id="load-more"
+          style="display: <%= blogs.length > 10 ? 'block' : 'none' %>;
+         background-color: #f1c40f; /* Button background color */
+         color: white; /* Button text color */
+         padding: 10px 20px; /* Button padding */
+         border: none; /* No border */
+         border-radius: 5px; /* Rounded corners */
+         font-size: 16px; /* Text size */
+         font-weight: bold; /* Bold text */
+         cursor: pointer; /* Pointer on hover */
+         transition: background-color 0.3s ease; /* Smooth background transition */
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+         margin: 20px auto; /* Centering the button */
+         display: block;"
+          onmouseover="this.style.backgroundColor='#d4ac0d';"
+          onmouseout="this.style.backgroundColor='#f1c40f';"
+        >
+          Load More
+        </button>
       </div>
     </div>
 
@@ -467,39 +489,73 @@
     ></script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const categoryLinks = document.querySelectorAll("#categories-list a");
-        const blogCards = document.querySelectorAll(".blog-card");
+            // JavaScript to handle loading more blogs
+      document.addEventListener('DOMContentLoaded', function () {
+        const loadMoreButton = document.getElementById('load-more');
+        const blogsContainer = document.getElementById('blogs-container');
+        let blogs = <%- JSON.stringify(blogs) %>; // Pass all blogs to the front end
+        let blogsShown = 10; // Initially show 10 blogs
 
-        // Check if categories and blog cards are found
-        // console.log("Category Links:", categoryLinks);
-        // console.log("Blog Cards:", blogCards);
-        // console.log();
+        loadMoreButton.addEventListener('click', function () {
+          // Show 10 more blogs on each click
+          let nextBlogs = blogs.slice(blogsShown, blogsShown + 10);
 
-        // Add event listeners to each category link
-        categoryLinks.forEach((link) => {
-          link.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent the default anchor behavior
-            const selectedCategory = link.getAttribute("data-category-id");
-            // console.log("Selected Category:", selectedCategory); // Log selected category
-            filterPosts(selectedCategory);
+          nextBlogs.forEach(blog => {
+            let blogCard = document.createElement('div');
+            blogCard.classList.add('blog-card');
+            blogCard.setAttribute('data-blog-id', blog.categoryId);
+            blogCard.innerHTML = `
+              <img src="${blog.imageUrl}" alt="${blog.title} Image" />
+              <h2 style="color: #f1c40f"><strong>${blog.title}</strong></h2>
+              <p>${blog.content.substring(0, 100)}...</p>
+              <a href="/api/blogs/view/${blog.blogId}">Read More</a>
+            `;
+            blogsContainer.appendChild(blogCard);
           });
+
+          blogsShown += 10;
+
+          // Hide the button if all blogs are shown
+          if (blogsShown >= blogs.length) {
+            loadMoreButton.style.display = 'none';
+          }
         });
-
-        // Function to filter posts based on selected category
-        function filterPosts(selectedCategory) {
-          blogCards.forEach((card) => {
-            const cardCategory = card.getAttribute("data-blog-id");
-            console.log("Card Category:", cardCategory);
-            console.log("Selected Category:", selectedCategory); // Log card category for debugging
-            if (selectedCategory === "" || cardCategory === selectedCategory) {
-              card.style.display = "block"; // Show the card
-            } else {
-              card.style.display = "none"; // Hide the card
-            }
-          });
-        }
       });
+
+
+            document.addEventListener("DOMContentLoaded", () => {
+              const categoryLinks = document.querySelectorAll("#categories-list a");
+              const blogCards = document.querySelectorAll(".blog-card");
+
+              // Check if categories and blog cards are found
+              // console.log("Category Links:", categoryLinks);
+              // console.log("Blog Cards:", blogCards);
+              // console.log();
+
+              // Add event listeners to each category link
+              categoryLinks.forEach((link) => {
+                link.addEventListener("click", (event) => {
+                  event.preventDefault(); // Prevent the default anchor behavior
+                  const selectedCategory = link.getAttribute("data-category-id");
+                  // console.log("Selected Category:", selectedCategory); // Log selected category
+                  filterPosts(selectedCategory);
+                });
+              });
+
+              // Function to filter posts based on selected category
+              function filterPosts(selectedCategory) {
+                blogCards.forEach((card) => {
+                  const cardCategory = card.getAttribute("data-blog-id");
+                  console.log("Card Category:", cardCategory);
+                  console.log("Selected Category:", selectedCategory); // Log card category for debugging
+                  if (selectedCategory === "" || cardCategory === selectedCategory) {
+                    card.style.display = "block"; // Show the card
+                  } else {
+                    card.style.display = "none"; // Hide the card
+                  }
+                });
+              }
+            });
     </script>
   </body>
 </html>
