@@ -24,6 +24,8 @@ const userController = {
 
       // Check if the password matches
       if (user[0].password === password) {
+        req.session.isLoggedIn = true; // Set session variable
+        req.session.user = { username };
         return res.redirect("/api/blogs/all");
         // const token = generateToken(user);
         // res.json({ token });

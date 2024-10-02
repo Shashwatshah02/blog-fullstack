@@ -1,123 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Dashboard</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css" />
 
     <style>
-        /* Basic styling for the dashboard */
-        body { 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            background-color: #f8f9fa; 
-        }
-        h1 { 
-            text-align: center; 
-            color: #333; 
-            margin-bottom: 20px; 
-        }
-        a {
-            display: inline-block; 
-            margin: 20px 0; 
-            padding: 10px 15px; 
-            background-color: #007bff; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            transition: background-color 0.3s; 
-        }
-        a:hover {
-            background-color: #0056b3; 
-        }
-        table {
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 20px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            border-radius: 10px; 
-            overflow: hidden; 
-        }
-        th, td {
-            padding: 12px; 
-            text-align: left; 
-            border: 1px solid #ddd; 
-            transition: background-color 0.3s; 
-        }
-        th {
-            background-color: #007bff; 
-            color: white; 
-            text-transform: uppercase; 
-            letter-spacing: 0.1em; 
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2; 
-        }
-        tr:hover {
-            background-color: #e9ecef; 
-        }
-        /* Styling for the action buttons */
-        .action-button {
-            padding: 5px 10px; 
-            background-color: #28a745; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
-        }
-        .action-button:hover {
-            background-color: #218838; 
-        }
-        .action-button.delete {
-            background-color: #dc3545; 
-        }
-        .action-button.delete:hover {
-            background-color: #c82333; 
-        }
-        .action-button.view {
-            background-color: #007bff; 
-        }
-        .action-button.view:hover {
-            background-color: #0056b3; 
-        }
+      /* Basic styling for the dashboard */
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      a {
+        display: inline-block;
+        margin: 20px 0;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+      a:hover {
+        background-color: #0056b3;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        transition: background-color 0.3s;
+      }
+      th {
+        background-color: #007bff;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #e9ecef;
+      }
+      /* Styling for the action buttons */
+      .action-button {
+        padding: 5px 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .action-button:hover {
+        background-color: #218838;
+      }
+      .action-button.delete {
+        background-color: #dc3545;
+      }
+      .action-button.delete:hover {
+        background-color: #c82333;
+      }
+      .action-button.view {
+        background-color: #007bff;
+      }
+      .action-button.view:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Blog Dashboard</h1>
 
     <a href="/api/blogs/create">Add New Post</a>
-    <a href="/api/blogs/categories" class="add-category-button">Add / Delete Categories</a>
-
+    <a href="/api/blogs/categories" class="add-category-button"
+      >Add / Delete Categories</a
+    >
+    <form action="/logout" method="POST">
+      <button
+        type="submit"
+        style="
+          background-color: #e74c3c;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        "
+      >
+        Logout
+      </button>
+    </form>
 
     <!-- Table to display the posts -->
     <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Category</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% posts.forEach(post => { %>
-                <tr>
-                    <td><%= post.blogId %></td>
-                    <td><%= post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title %></td>
-                    <td><%= post.content.length > 50 ? post.content.substring(0, 50) + '...' : post.content %></td>
-                    <td><%= post.categoryName %></td> <!-- Displaying the category name -->
-                    <td>
-                        <button class="action-button view" onclick="location.href='/api/blogs/view/<%= post.blogId %>'">View</button>
-                        <button class="action-button" onclick="location.href='/api/blogs/edit/<%= post.blogId %>'">Edit</button>
-                        <button class="action-button delete" onclick="location.href='/api/blogs/delete/<%= post.blogId %>'">Delete</button>
-                    </td>
-                </tr>
-            <% }); %>
-        </tbody>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% posts.forEach(post => { %>
+        <tr>
+          <td><%= post.blogId %></td>
+          <td>
+            <%= post.title.length > 50 ? post.title.substring(0, 50) + '...' :
+            post.title %>
+          </td>
+          <td>
+            <%= post.content.length > 50 ? post.content.substring(0, 50) + '...'
+            : post.content %>
+          </td>
+          <td><%= post.categoryName %></td>
+          <!-- Displaying the category name -->
+          <td>
+            <button
+              class="action-button view"
+              onclick="location.href='/api/blogs/view/<%= post.blogId %>'"
+            >
+              View
+            </button>
+            <button
+              class="action-button"
+              onclick="location.href='/api/blogs/edit/<%= post.blogId %>'"
+            >
+              Edit
+            </button>
+            <button
+              class="action-button delete"
+              onclick="location.href='/api/blogs/delete/<%= post.blogId %>'"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>
