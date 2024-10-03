@@ -45,19 +45,22 @@ app.get("/test", (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about");
 });
+app.get('/contact', async (req, res) => {
+  res.render('contact');
+});
 app.get("/", blogController.getEverything);
 app.use("/api/users", userRoutes);
 app.use("/api/blogs", blogRoutes);
 app.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Error logging out:', err);
-      } else {
-        res.redirect('api/users/login'); // Redirect to login page after logging out
-      }
-    });
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+    } else {
+      res.redirect('api/users/login'); // Redirect to login page after logging out
+    }
   });
-  
+});
+
 // A route to fetch users from the MySQL database
 app.post("/", async (req, res) => {
   try {

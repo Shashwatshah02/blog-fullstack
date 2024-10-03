@@ -1,413 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Blog Website</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/style.css" />
-    <style>
-      /* Your existing styles */
-      body {
-        font-family: "Poppins", sans-serif;
-        background-color: #f4f7f6;
-        margin: 0;
-        padding: 0;
-      }
-      /* Modern Navbar styling */
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #000000; /* Black background */
-        padding: 15px 30px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        position: relative;
-        z-index: 1000;
-      }
 
-      .navbar-logo {
-        font-size: 1.8rem;
-        color: #ffffff; /* White color for the logo text */
-        font-weight: bold;
-        letter-spacing: 1px;
-        text-transform: uppercase;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Blog Website</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Favicons -->
+  <!-- <link href="assets/img/favicon.png" rel="icon"> -->
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet">
+
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* Your existing styles */
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Modern Navbar styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #000000;
+      /* Black background */
+      padding: 15px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1000;
+    }
+
+    .navbar-logo {
+      font-size: 1.8rem;
+      color: #ffffff;
+      /* White color for the logo text */
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .navbar div {
+      display: flex;
+      gap: 20px;
+      /* Space between links */
+      align-items: center;
+      /* Align items vertically in the middle */
+    }
+
+    .navbar a {
+      color: #ffffff;
+      /* White color for links */
+      text-decoration: none;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #f1c40f;
+      /* Gold color on hover */
+    }
+
+    .navbar a::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #f1c40f;
+      /* Gold underline on hover */
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      position: relative;
+      bottom: -4px;
+    }
+
+    .navbar a:hover::after {
+      transform: scaleX(1);
+      /* Animate the underline effect */
+    }
+
+    .login-btn {
+      background-color: #f1c40f;
+      /* Gold background for the login button */
+      color: #000000;
+      /* Black text color for contrast */
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #e67e22;
+      /* Slightly darker shade on hover */
+    }
+
+    /* Add responsive design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        /* Stack the navbar vertically on small screens */
+        align-items: flex-start;
       }
 
       .navbar div {
-        display: flex;
-        gap: 20px; /* Space between links */
-        align-items: center; /* Align items vertically in the middle */
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: flex-start;
       }
 
       .navbar a {
-        color: #ffffff; /* White color for links */
-        text-decoration: none;
-        font-size: 1.1rem;
-        position: relative;
-        transition: color 0.3s ease;
-      }
-
-      .navbar a:hover {
-        color: #f1c40f; /* Gold color on hover */
-      }
-
-      .navbar a::after {
-        content: "";
-        display: block;
         width: 100%;
-        height: 2px;
-        background: #f1c40f; /* Gold underline on hover */
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-        position: relative;
-        bottom: -4px;
-      }
-
-      .navbar a:hover::after {
-        transform: scaleX(1); /* Animate the underline effect */
       }
 
       .login-btn {
-        background-color: #f1c40f; /* Gold background for the login button */
-        color: #000000; /* Black text color for contrast */
-        padding: 8px 15px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-      }
-
-      .login-btn:hover {
-        background-color: #e67e22; /* Slightly darker shade on hover */
-      }
-
-      /* Add responsive design */
-      @media (max-width: 768px) {
-        .navbar {
-          flex-direction: column; /* Stack the navbar vertically on small screens */
-          align-items: flex-start;
-        }
-
-        .navbar div {
-          flex-direction: column;
-          gap: 10px;
-          width: 100%;
-          align-items: flex-start;
-        }
-
-        .navbar a {
-          width: 100%;
-        }
-
-        .login-btn {
-          width: 100%;
-          text-align: center;
-        }
-      }
-
-      /* Carousel styling */
-      .carousel {
-        /* margin: 40px 0; */
-        display: flex;
-        overflow: hidden;
-        position: relative;
-      }
-      .carousel img {
         width: 100%;
-        height: 600px;
-        object-fit: cover;
-      }
-      .carousel-indicators {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-      }
-      .carousel-indicators div {
-        width: 10px;
-        height: 10px;
-        margin: 0 5px;
-        background-color: white;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-      .carousel-indicators .active {
-        background-color: #007bff;
-      }
-      /* Sidebar Styling */
-      .sidebar h3 {
-        color: #ecf0f1; /* Matches the navbar text color */
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-      }
-
-      .sidebar ul li {
-        background-color: #34495e; /* Dark background similar to navbar */
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .sidebar ul li a {
-        text-decoration: none;
-        color: #ecf0f1; /* Light text color */
-        font-size: 1rem;
-      }
-
-      .sidebar ul li a:hover {
-        color: #3498db; /* Highlight color */
-      }
-
-      /* Blog Cards Styling */
-      .blogs-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 20px;
-      }
-
-      .blog-card {
-        background-color: #34495e; /* Dark background to match navbar */
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s;
-        color: #ecf0f1; /* Light text color */
-      }
-
-      .blog-card:hover {
-        transform: translateY(-5px);
-      }
-
-      .blog-card h2 {
-        font-size: 1.5rem;
-        color: #ecf0f1;
-        margin: 0;
-      }
-
-      .blog-card p {
-        color: #bdc3c7;
-        margin: 10px 0;
-        font-size: 1rem;
-      }
-
-      .blog-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 5px;
-        margin-bottom: 15px;
-      }
-
-      .blog-card a {
-        margin-top: auto;
-        padding: 10px;
-        background-color: #3498db; /* Button color */
-        color: white;
-        text-decoration: none;
         text-align: center;
-        border-radius: 5px;
-        transition: background-color 0.3s;
       }
+    }
 
-      .blog-card a:hover {
-        background-color: #2980b9;
+    /* Carousel styling */
+    .carousel {
+      /* margin: 40px 0; */
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+    }
+
+    .carousel-indicators div {
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      background-color: white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .carousel-indicators .active {
+      background-color: #007bff;
+    }
+
+    /* Sidebar Styling */
+    .sidebar h3 {
+      color: #ecf0f1;
+      /* Matches the navbar text color */
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .sidebar ul li {
+      background-color: #34495e;
+      /* Dark background similar to navbar */
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #ecf0f1;
+      /* Light text color */
+      font-size: 1rem;
+    }
+
+    .sidebar ul li a:hover {
+      color: #3498db;
+      /* Highlight color */
+    }
+
+    /* Blog Cards Styling */
+    .blogs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 20px;
+    }
+
+    .blog-card {
+      background-color: #34495e;
+      /* Dark background to match navbar */
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+      color: #ecf0f1;
+      /* Light text color */
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .blog-card h2 {
+      font-size: 1.5rem;
+      color: #ecf0f1;
+      margin: 0;
+    }
+
+    .blog-card p {
+      color: #bdc3c7;
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .blog-card a {
+      margin-top: auto;
+      padding: 10px;
+      background-color: #3498db;
+      /* Button color */
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .blog-card a:hover {
+      background-color: #2980b9;
+    }
+
+    /* Main Container Styling */
+    .container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      width: 25%;
+      background-color: #34495e;
+      /* Dark background */
+      padding: 20px;
+      border-radius: 10px;
+      color: #ecf0f1;
+      /* Light text */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ecf0f1;
+      /* Match the navbar text */
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 10px;
+      background-color: #2c3e50;
+      /* Match the navbar */
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sidebar ul li a {
+      color: #ecf0f1;
+      /* Light text color */
+      text-decoration: none;
+    }
+
+    .sidebar ul li a:hover {
+      color: #3498db;
+      /* Highlight on hover */
+    }
+
+    /* Main Content Styling */
+    .main-content {
+      width: 75%;
+    }
+
+    .blogs-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Set to 2 columns */
+      gap: 20px;
+      /* Space between the cards */
+    }
+
+    .blog-card {
+      background-color: #34495e;
+      /* Dark background */
+      color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .blog-card h2 {
+      font-size: 1.5rem;
+      color: #ecf0f1;
+    }
+
+    .blog-card p {
+      color: #bdc3c7;
+      /* Slightly lighter text for the description */
+    }
+
+    .blog-card a {
+      align-self: flex-start;
+      padding: 10px 15px;
+      background-color: #3498db;
+      /* Blue button */
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .blog-card a:hover {
+      background-color: #2980b9;
+    }
+
+    .footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 1px 0;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 600px) {
+      .blogs-container {
+        grid-template-columns: 1fr;
+        /* Stack cards on small screens */
       }
-      /* Main Container Styling */
+    }
+
+    /* Responsive for smaller screens */
+    @media screen and (max-width: 768px) {
       .container {
-        display: flex;
-        gap: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-      }
-
-      /* Sidebar Styling */
-      .sidebar {
-        width: 25%;
-        background-color: #34495e; /* Dark background */
-        padding: 20px;
-        border-radius: 10px;
-        color: #ecf0f1; /* Light text */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .sidebar h3 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-        color: #ecf0f1; /* Match the navbar text */
-      }
-
-      .sidebar ul {
-        list-style: none;
-        padding: 0;
-      }
-
-      .sidebar ul li {
-        margin-bottom: 10px;
-        background-color: #2c3e50; /* Match the navbar */
-        padding: 10px;
-        border-radius: 5px;
-      }
-
-      .sidebar ul li a {
-        color: #ecf0f1; /* Light text color */
-        text-decoration: none;
-      }
-
-      .sidebar ul li a:hover {
-        color: #3498db; /* Highlight on hover */
-      }
-
-      /* Main Content Styling */
-      .main-content {
-        width: 75%;
-      }
-
-      .blogs-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Set to 2 columns */
-        gap: 20px; /* Space between the cards */
-      }
-
-      .blog-card {
-        background-color: #34495e; /* Dark background */
-        color: #ecf0f1;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        display: flex;
         flex-direction: column;
       }
 
-      .blog-card img {
+      .sidebar,
+      .main-content {
         width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 5px;
-        margin-bottom: 10px;
       }
+    }
+  </style>
+</head>
 
-      .blog-card h2 {
-        font-size: 1.5rem;
-        color: #ecf0f1;
-      }
+<body class="index-page">
+  <!-- Navbar -->
+  <!-- <div class="navbar">
+    <div class="navbar-logo">Blog Website</div>
+    <div>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/api/users/login" class="login-btn">Login</a>
+    </div>
+  </div> -->
+  <header id="header" class="header d-flex align-items-center sticky-top"></header>
+  <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      .blog-card p {
-        color: #bdc3c7; /* Slightly lighter text for the description */
-      }
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1 class="sitename">ZenBlog</h1>
+    </a>
 
-      .blog-card a {
-        align-self: flex-start;
-        padding: 10px 15px;
-        background-color: #3498db; /* Blue button */
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-      }
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="dropdown"><a href="#"><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="category.html">Category 1</a></li>
+            <li><a href="category.html">Category 2</a></li>
+            <li><a href="category.html">Category 3</a></li>
+            <li><a href="category.html">Category 4</a></li>
+          </ul>
+        </li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/api/users/login">Login</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
 
-      .blog-card a:hover {
-        background-color: #2980b9;
-      }
-      .footer {
-        background-color: #222;
-        color: #fff;
-        text-align: center;
-        padding: 1px 0;
-      }
-      /* Responsive for smaller screens */
-      @media (max-width: 600px) {
-        .blogs-container {
-          grid-template-columns: 1fr; /* Stack cards on small screens */
-        }
-      }
-
-      /* Responsive for smaller screens */
-      @media screen and (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
-        .sidebar,
-        .main-content {
-          width: 100%;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navbar -->
-    <div class="navbar">
-      <div class="navbar-logo">Blog Website</div>
-      <div>
-        <a href="/">Home</a>
-        <!-- <a href="/api/blogs/all">Blogs</a> -->
-        <a href="/about">About</a>
-        <a href="/api/users/login" class="login-btn">Login</a>
-      </div>
+    <div class="header-social-links">
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
     </div>
 
-    <!-- Carousel -->
-    <div
-      id="carouselExampleControls"
-      class="carousel slide"
-      data-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img
-            class="d-block w-100"
-            src="carousal/image1.jpg"
-            alt="First slide"
-          />
+  </div>
+  </header>
+
+  <!-- Carousel -->
+  <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="carousal/image1.jpg" alt="First slide" />
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="carousal/image2.jpg" alt="Second slide" />
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="carousal/image3.jpg" alt="Third slide" />
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div> -->
+  <main class="main">
+    <section id="slider" class="slider section dark-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+
+          <script type="application/json" class="swiper-config">
+          {
+            "loop": true,
+            "speed": 600,
+            "autoplay": {
+              "delay": 5000
+            },
+            "slidesPerView": "auto",
+            "centeredSlides": true,
+            "pagination": {
+              "el": ".swiper-pagination",
+              "type": "bullets",
+              "clickable": true
+            },
+            "navigation": {
+              "nextEl": ".swiper-button-next",
+              "prevEl": ".swiper-button-prev"
+            }
+          }
+        </script>
+
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide" style="background-image: url('../assets/img/post-slide-1.jpg');">
+              <div class="content">
+                <h2><a href="single-post.html">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima
+                  assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae
+                  quidem necessitatibus rem atque.</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url('/assets/img/post-slide-2.jpg');">
+              <div class="content">
+                <h2><a href="single-post.html">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New
+                    Haircut</a></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima
+                  assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae
+                  quidem necessitatibus rem atque.</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url('assets/img/post-slide-3.jpg');">
+              <div class="content">
+                <h2><a href="single-post.html">13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</a>
+                </h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima
+                  assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae
+                  quidem necessitatibus rem atque.</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url('assets/img/post-slide-4.jpg');">
+              <div class="content">
+                <h2><a href="single-post.html">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima
+                  assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae
+                  quidem necessitatibus rem atque.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+          <div class="swiper-pagination"></div>
         </div>
-        <div class="carousel-item">
-          <img
-            class="d-block w-100"
-            src="carousal/image2.jpg"
-            alt="Second slide"
-          />
-        </div>
-        <div class="carousel-item">
-          <img
-            class="d-block w-100"
-            src="carousal/image3.jpg"
-            alt="Third slide"
-          />
+
+      </div>
+
+    </section>
+    <!-- Trending Category Section -->
+    <section id="trending-category" class="trending-category section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="container" data-aos="fade-up">
+          <div class="row g-5">
+            <!-- Main Left Section -->
+            <div class="col-lg-4">
+              <% if(blogs && blogs.length> 0) { %>
+                <div class="post-entry lg">
+                  <a href="/api/blogs/view/<%= blogs[0].blogId %>">
+                    <img src="<%= blogs[0].imageUrl %>" alt="<%= blogs[0].title %> Image" class="img-fluid">
+                  </a>
+                  <div class="post-meta">
+                    <span class="date">
+                      <%= blogs[0].categoryName %>
+                    </span>
+                    <span class="mx-1">•</span>
+                    <span>
+                      <%= new Date(blogs[0].createdAt).toDateString() %>
+                    </span>
+                  </div>
+                  <h2>
+                    <a href="/api/blogs/view/<%= blogs[0].blogId %>">
+                      <%= blogs[0].title %>
+                    </a>
+                  </h2>
+                  <p class="mb-4 d-block">
+                    <%= blogs[0].content.substring(0, 100) %>...
+                  </p>
+                  <div class="d-flex align-items-center author">
+                    <div class="photo">
+                      <img src="assets/img/person-1.jpg" alt="" class="img-fluid">
+                    </div>
+                    <div class="name">
+                      <h3 class="m-0 p-0">Author Name</h3>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+            </div>
+
+            <!-- Main Right Section -->
+            <div class="col-lg-8">
+              <div class="row g-5">
+                <% blogs.slice(1, 7).forEach(blog=> { %>
+                  <div class="col-lg-4 border-start custom-border">
+                    <div class="post-entry">
+                      <a href="/api/blogs/view/<%= blog.blogId %>">
+                        <img src="<%= blog.imageUrl %>" alt="<%= blog.title %> Image" class="img-fluid">
+                      </a>
+                      <div class="post-meta">
+                        <span class="date">
+                          <%= blog.categoryName %>
+                        </span>
+                        <span class="mx-1">•</span>
+                        <span>
+                          <%= new Date(blog.createdAt).toDateString() %>
+                        </span>
+                      </div>
+                      <h2><a href="/api/blogs/view/<%= blog.blogId %>">
+                          <%= blog.title %>
+                        </a></h2>
+                    </div>
+                  </div>
+                  <% }) %>
+
+
+              </div>
+            </div>
+          </div> <!-- End .row -->
         </div>
       </div>
-      <a
-        class="carousel-control-prev"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
+    </section>
 
-    <div class="container">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <button
-          id="fetch-news-btn"
-          style="
+  </main>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <button id="fetch-news-btn" style="
             background-color: #3498db;
             color: white;
             padding: 10px 20px;
@@ -416,54 +634,55 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-          "
-        >
-          Fetch and Insert News
-        </button>
-        <br />
-        <h3 style="color: #f1c40f">Recent Posts</h3>
-        <ul>
-          <% blogs.slice(0, 10).forEach(blog => { %>
+          ">
+        Fetch and Insert News
+      </button>
+      <br />
+      <h3 style="color: #f1c40f">Recent Posts</h3>
+      <ul>
+        <% blogs.slice(0, 10).forEach(blog=> { %>
           <li>
-            <a href="/api/blogs/view/<%= blog.blogId %>"
-              ><%= blog.title.substring(0, 20) %>...</a
-            >
+            <a href="/api/blogs/view/<%= blog.blogId %>">
+              <%= blog.title.substring(0, 20) %>...
+            </a>
           </li>
           <% }) %>
-        </ul>
+      </ul>
 
-        <h3 style="color: #f1c40f">Categories</h3>
-        <ul id="categories-list">
-          <% categories.forEach(category => { %>
+      <h3 style="color: #f1c40f">Categories</h3>
+      <ul id="categories-list">
+        <% categories.forEach(category=> { %>
           <li>
-            <a href="#" data-category-id="<%= category.categoryId %>"
-              ><%= category.categoryName %></a
-            >
+            <a href="#" data-category-id="<%= category.categoryId %>">
+              <%= category.categoryName %>
+            </a>
           </li>
           <% }) %>
-          <li>
-            <a href="#" data-category-id="">All Categories</a>
-          </li>
-        </ul>
-      </div>
+            <li>
+              <a href="#" data-category-id="">All Categories</a>
+            </li>
+      </ul>
+    </div>
 
-      <!-- Main content -->
-      <div class="main-content">
-        <div class="blogs-container" id="blogs-container">
-          <% blogs.slice(0, 10).forEach(blog => { %>
+    <!-- Main content -->
+    <div class="main-content">
+      <div class="blogs-container" id="blogs-container">
+        <% blogs.slice(0, 10).forEach(blog=> { %>
           <div class="blog-card" data-blog-id="<%= blog.categoryId %>">
             <img src="<%= blog.imageUrl %>" alt="<%= blog.title %> Image" />
-            <h2 style="color: #f1c40f"><strong><%= blog.title.substring(0, 50) %>... %></strong></h2>
-            <p><%= blog.content.substring(0, 100) %>...</p>
+            <h2 style="color: #f1c40f"><strong>
+                <%= blog.title.substring(0, 50) %>... %>
+              </strong></h2>
+            <p>
+              <%= blog.content.substring(0, 100) %>...
+            </p>
             <a href="/api/blogs/view/<%= blog.blogId %>">Read More</a>
           </div>
           <% }) %>
-        </div>
+      </div>
 
-        <!-- Load More button -->
-        <button
-          id="load-more"
-          style="display: <%= blogs.length > 10 ? 'block' : 'none' %>;
+      <!-- Load More button -->
+      <button id="load-more" style="display: <%= blogs.length > 10 ? 'block' : 'none' %>;
          background-color: #f1c40f; /* Button background color */
          color: white; /* Button text color */
          padding: 10px 20px; /* Button padding */
@@ -475,121 +694,127 @@
          transition: background-color 0.3s ease; /* Smooth background transition */
          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
          margin: 20px auto; /* Centering the button */
-         display: block;"
-          onmouseover="this.style.backgroundColor='#d4ac0d';"
-          onmouseout="this.style.backgroundColor='#f1c40f';"
-        >
-          Load More
-        </button>
-      </div>
+         display: block;" onmouseover="this.style.backgroundColor='#d4ac0d';"
+        onmouseout="this.style.backgroundColor='#f1c40f';">
+        Load More
+      </button>
     </div>
+  </div>
 
-    <footer class="footer">
-      <p>&copy; 2024 MyBlog. All Rights Reserved.</p>
-    </footer>
+  <footer class="footer">
+    <p>&copy; 2024 MyBlog. All Rights Reserved.</p>
+  </footer>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <script>
-      document
-        .getElementById("fetch-news-btn")
-        .addEventListener("click", function () {
-          fetch("/", {
-            method: "POST",
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <script>
+    document
+      .getElementById("fetch-news-btn")
+      .addEventListener("click", function () {
+        fetch("/", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("News fetched and inserted:", data);
+            // alert("News articles fetched and inserted successfully!");
+            location.reload();
           })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("News fetched and inserted:", data);
-              // alert("News articles fetched and inserted successfully!");
-              location.reload();
-            })
-            .catch((error) => {
-              console.error("Error fetching news:", error);
-            });
-        });
-    </script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+          .catch((error) => {
+            console.error("Error fetching news:", error);
+          });
+      });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <script>
-            // JavaScript to handle loading more blogs
-      document.addEventListener('DOMContentLoaded', function () {
-        const loadMoreButton = document.getElementById('load-more');
-        const blogsContainer = document.getElementById('blogs-container');
-        let blogs = <%- JSON.stringify(blogs) %>; // Pass all blogs to the front end
-        let blogsShown = 10; // Initially show 10 blogs
+  <script>
+    // JavaScript to handle loading more blogs
+    document.addEventListener('DOMContentLoaded', function () {
+      const loadMoreButton = document.getElementById('load-more');
+      const blogsContainer = document.getElementById('blogs-container');
+      let blogs = "<% - JSON.stringify(blogs) %>"; // Pass all blogs to the front end
+      let blogsShown = 10; // Initially show 10 blogs
 
-        loadMoreButton.addEventListener('click', function () {
-          // Show 10 more blogs on each click
-          let nextBlogs = blogs.slice(blogsShown, blogsShown + 10);
+      loadMoreButton.addEventListener('click', function () {
+        // Show 10 more blogs on each click
+        let nextBlogs = blogs.slice(blogsShown, blogsShown + 10);
 
-          nextBlogs.forEach(blog => {
-            let blogCard = document.createElement('div');
-            blogCard.classList.add('blog-card');
-            blogCard.setAttribute('data-blog-id', blog.categoryId);
-            blogCard.innerHTML = `
+        nextBlogs.forEach(blog => {
+          let blogCard = document.createElement('div');
+          blogCard.classList.add('blog-card');
+          blogCard.setAttribute('data-blog-id', blog.categoryId);
+          blogCard.innerHTML = `
               <img src="${blog.imageUrl}" alt="${blog.title} Image" />
               <h2 style="color: #f1c40f"><strong>${blog.title}</strong></h2>
               <p>${blog.content.substring(0, 100)}...</p>
               <a href="/api/blogs/view/${blog.blogId}">Read More</a>
             `;
-            blogsContainer.appendChild(blogCard);
-          });
+          blogsContainer.appendChild(blogCard);
+        });
 
-          blogsShown += 10;
+        blogsShown += 10;
 
-          // Hide the button if all blogs are shown
-          if (blogsShown >= blogs.length) {
-            loadMoreButton.style.display = 'none';
-          }
+        // Hide the button if all blogs are shown
+        if (blogsShown >= blogs.length) {
+          loadMoreButton.style.display = 'none';
+        }
+      });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const categoryLinks = document.querySelectorAll("#categories-list a");
+      const blogCards = document.querySelectorAll(".blog-card");
+
+      // Check if categories and blog cards are found
+      // console.log("Category Links:", categoryLinks);
+      // console.log("Blog Cards:", blogCards);
+      // console.log();
+
+      // Add event listeners to each category link
+      categoryLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent the default anchor behavior
+          const selectedCategory = link.getAttribute("data-category-id");
+          // console.log("Selected Category:", selectedCategory); // Log selected category
+          filterPosts(selectedCategory);
         });
       });
 
+      // Function to filter posts based on selected category
+      function filterPosts(selectedCategory) {
+        blogCards.forEach((card) => {
+          const cardCategory = card.getAttribute("data-blog-id");
+          console.log("Card Category:", cardCategory);
+          console.log("Selected Category:", selectedCategory); // Log card category for debugging
+          if (selectedCategory === "" || cardCategory === selectedCategory) {
+            card.style.display = "block"; // Show the card
+          } else {
+            card.style.display = "none"; // Hide the card
+          }
+        });
+      }
+    });
+  </script>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-            document.addEventListener("DOMContentLoaded", () => {
-              const categoryLinks = document.querySelectorAll("#categories-list a");
-              const blogCards = document.querySelectorAll(".blog-card");
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
 
-              // Check if categories and blog cards are found
-              // console.log("Category Links:", categoryLinks);
-              // console.log("Blog Cards:", blogCards);
-              // console.log();
-
-              // Add event listeners to each category link
-              categoryLinks.forEach((link) => {
-                link.addEventListener("click", (event) => {
-                  event.preventDefault(); // Prevent the default anchor behavior
-                  const selectedCategory = link.getAttribute("data-category-id");
-                  // console.log("Selected Category:", selectedCategory); // Log selected category
-                  filterPosts(selectedCategory);
-                });
-              });
-
-              // Function to filter posts based on selected category
-              function filterPosts(selectedCategory) {
-                blogCards.forEach((card) => {
-                  const cardCategory = card.getAttribute("data-blog-id");
-                  console.log("Card Category:", cardCategory);
-                  console.log("Selected Category:", selectedCategory); // Log card category for debugging
-                  if (selectedCategory === "" || cardCategory === selectedCategory) {
-                    card.style.display = "block"; // Show the card
-                  } else {
-                    card.style.display = "none"; // Hide the card
-                  }
-                });
-              }
-            });
-    </script>
-  </body>
 </html>

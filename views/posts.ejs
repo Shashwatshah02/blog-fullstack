@@ -151,7 +151,7 @@
             </button>
             <button
               class="action-button delete"
-              onclick="location.href='/api/blogs/delete/<%= post.blogId %>'"
+              onclick="confirmDelete('<%= post.blogId %>')"
             >
               Delete
             </button>
@@ -160,5 +160,18 @@
         <% }); %>
       </tbody>
     </table>
+    <script>
+      function confirmDelete(blogId) {
+        const userConfirmed = confirm(
+          'Are you sure you want to delete this post ?'
+        );
+    
+        if (userConfirmed) {
+          // If user confirms, proceed with deletion
+          location.href = `/api/blogs/delete/${blogId}`;
+        }
+        // If the user cancels, the action is stopped, and nothing happens
+      }
+    </script>
   </body>
 </html>
