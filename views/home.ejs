@@ -452,8 +452,8 @@
         <div class="blogs-container" id="blogs-container">
           <% blogs.slice(0, 10).forEach(blog => { %>
           <div class="blog-card" data-blog-id="<%= blog.categoryId %>">
-            <img src="/<%= blog.imageUrl %>" alt="<%= blog.title %> Image" />
-            <h2 style="color: #f1c40f"><strong><%= blog.title %></strong></h2>
+            <img src="<%= blog.imageUrl %>" alt="<%= blog.title %> Image" />
+            <h2 style="color: #f1c40f"><strong><%= blog.title.substring(0, 50) %>... %></strong></h2>
             <p><%= blog.content.substring(0, 100) %>...</p>
             <a href="/api/blogs/view/<%= blog.blogId %>">Read More</a>
           </div>
