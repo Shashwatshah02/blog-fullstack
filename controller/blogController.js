@@ -1,6 +1,9 @@
 import Blog from "../models/blogModels.js";
 import multer from "multer";
 import path from "path";
+import axios from "axios";
+import { getConnection, db } from "../db.js"; // Importing the connection function
+const apiKey = "d7ff08a7ead34e6896929146fa9ac228";
 
 const storage = multer.diskStorage({
   destination: "./uploads/",
@@ -34,7 +37,7 @@ const blogController = {
   getAllBlogs: async (req, res) => {
     try {
       const blogs = await Blog.getAllBlogs();
-      res.render("posts", { posts: blogs });
+      res.render("posts", { posts: blogs, layout: false });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -48,7 +51,7 @@ const blogController = {
         return res.status(404).send("Blog post not found");
       }
       // console.log(blog[0])
-      res.render("blogDetail", { blog: blog[0] });
+      res.render("blogDetail", { blog: blog[0], layout: false });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -56,7 +59,7 @@ const blogController = {
   getCreateBlogPage: async (req, res) => {
     try {
       const categories = await Blog.getAllCategories();
-      res.render("newPost", { categories });
+      res.render("newPost", { categories: categories, layout: false });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -102,7 +105,7 @@ const blogController = {
       if ((blog, categories)) {
         // console.log(blog[0])
         console.log(categories);
-        res.render("editBlog", { blog: blog[0], categories: categories });
+        res.render("editBlog", { blog: blog[0], categories: categories, layout: false });
       } else {
         res.status(404).json({ message: "Blog post not found" });
       }
@@ -132,7 +135,7 @@ const blogController = {
     try {
       const categories = await Blog.getAllCategories();
       console.log(categories);
-      res.render("categories", { categories: categories });
+      res.render("categories", { categories: categories, layout: false });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -160,11 +163,71 @@ const blogController = {
       res.status(500).json({ error: error.message });
     }
   },
-  getEverything: async(req,res)=>{
+  getEverything: async (req, res) => {
     const blogs = await Blog.getAllBlogs();
     const categories = await Blog.getAllCategories();
-    console.log(blogs)
-    res.render("home", { blogs: blogs, categories: categories});
+    // console.log(blogs)
+    res.render("home", { title: 'Home', blogs: blogs, categories: categories });
+  },
+  getAbout: async (req, res) => {
+    const blogs = await Blog.getAllBlogs();
+    const categories = await Blog.getAllCategories();
+    // console.log(blogs)
+    res.render("about", { title: 'About', blogs: blogs, categories: categories });
+  },
+  getContact: async (req, res) => {
+    const blogs = await Blog.getAllBlogs();
+    const categories = await Blog.getAllCategories();
+    // console.log(blogs)
+    res.render("contact", { title: 'Contact', blogs: blogs, categories: categories });
+  },
+  getSelectedCategory: async (req, res) => {
+    const category = req.params.name;
+    const categories = await Blog.getAllCategories();
+    const response = await axios.get(
+      `https://newsapi.org/v2/everything?q=${category}&pageSize=10&apiKey=${apiKey}`
+    );
+    console.log(response.data.articles);
+    const articles = response.data.articles;
+    const batchSize = 10; // Number of records per batch
+    const batches = [];
+
+    // Break the articles array into batches
+    for (let i = 0; i < articles.length; i += batchSize) {
+      batches.push(articles.slice(i, i + batchSize));
+    }
+    const categoryId = categories.find(cat => cat.categoryName.toLowerCase() === category.toLowerCase())?.categoryId;
+    console.log(categories);
+    console.log(category); // Check what this logs
+
+    if (!categoryId) {
+      console.error("Category ID not found for category:", category);
+      return res.status(404).send("Category not found");
+    }
+    // Insert each batch into the database
+    batches.forEach((batch, index) => {
+      const values = batch
+        .filter((article) => article.title !== '[Removed]') // Filter out articles with title "[Removed]"
+        .map((article) => [
+          article.title,
+          article.description,
+          categoryId,
+          article.urlToImage,
+        ]);
+
+
+      const sql = `INSERT INTO blogs (title, content, categoryId, imageUrl) VALUES ?`;
+
+      db.query(sql, [values], (err, result) => {
+        if (err) {
+          console.error("Error inserting batch:", err);
+        } else {
+          console.log(`Batch ${index + 1} inserted successfully!`);
+        }
+      });
+    });
+    // console.log(blogs)
+    res.render("category", { title: category, blogs: response.data.articles, categories: categories });
   }
 };
 // You can add more controller functions here as needed

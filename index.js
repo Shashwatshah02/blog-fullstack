@@ -10,6 +10,7 @@ import userRoutes from "./routes/userRoutes.js";
 import { fileURLToPath } from "url";
 import blogRoutes from "./routes/blogRoutes.js";
 import blogController from "./controller/blogController.js";
+import expressLayouts from 'express-ejs-layouts';
 const apiKey = "d7ff08a7ead34e6896929146fa9ac228";
 const parser = new Parser();
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json()); // Allows parsing JSON in request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static("public"));
+app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -42,13 +44,10 @@ app.get("/test", (req, res) => {
 // app.get("/", async (req, res) => {
 //     res.render("home");
 // });
-app.get("/about", async (req, res) => {
-  res.render("about");
-});
-app.get('/contact', async (req, res) => {
-  res.render('contact');
-});
+app.get("/about",blogController.getAbout);
+app.get('/contact', blogController.getContact);
 app.get("/", blogController.getEverything);
+app.get("/categories/:name", blogController.getSelectedCategory);
 app.use("/api/users", userRoutes);
 app.use("/api/blogs", blogRoutes);
 app.post('/logout', (req, res) => {
@@ -62,63 +61,67 @@ app.post('/logout', (req, res) => {
 });
 
 // A route to fetch users from the MySQL database
-app.post("/", async (req, res) => {
-  try {
-    // Fetch news articles
-    const articles = await fetchNews();
-    // Insert news articles into the database
-    insertBatch(articles);
+// app.post("/", async (req, res) => {
+//   try {
+//     // Fetch news articles
+//     const articles = await fetchNews();
+//     // Insert news articles into the database
+//     insertBatch(articles);
 
-    // Respond with a success message
-    res.json({ message: "News articles fetched and inserted successfully!" });
-  } catch (error) {
-    console.error("Error fetching news or inserting:", error);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch and insert news articles." });
-  }
-});
-async function fetchNews() {
-  try {
-    const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=technology&pageSize=100&apiKey=${apiKey}`
-    );
-    console.log(response.data.articles);
-    return response.data.articles;
-  } catch (error) {
-    console.error("Error fetching news:", error);
-  }
-}
-// Function to insert data in batches
-function insertBatch(articles) {
-  const batchSize = 10; // Number of records per batch
-  const batches = [];
+//     // Respond with a success message
+//     res.json({ message: "News articles fetched and inserted successfully!" });
+//   } catch (error) {
+//     console.error("Error fetching news or inserting:", error);
+//     res
+//       .status(500)
+//       .json({ error: "Failed to fetch and insert news articles." });
+//   }
+// });
+// async function fetchNews() {
+//   try {
+//     const category = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
+//     const response = await axios.get(
+//       `https://newsapi.org/v2/everything?q=${category[2]}&pageSize=100&apiKey=${apiKey}`
+//     );
+//     console.log(response.data.articles);
+//     return response.data.articles;
+//   } catch (error) {
+//     console.error("Error fetching news:", error);
+//   }
+// }
+// // Function to insert data in batches
+// function insertBatch(articles) {
+//   const batchSize = 10; // Number of records per batch
+//   const batches = [];
 
-  // Break the articles array into batches
-  for (let i = 0; i < articles.length; i += batchSize) {
-    batches.push(articles.slice(i, i + batchSize));
-  }
+//   // Break the articles array into batches
+//   for (let i = 0; i < articles.length; i += batchSize) {
+//     batches.push(articles.slice(i, i + batchSize));
+//   }
 
-  // Insert each batch into the database
-  batches.forEach((batch, index) => {
-    const values = batch.map((article) => [
-      article.title,
-      article.description,
-      1,
-      article.urlToImage,
-    ]);
+//   // Insert each batch into the database
+//   batches.forEach((batch, index) => {
+//     const values = batch
+//       .filter((article) => article.title !== '[Removed]') // Filter out articles with title "[Removed]"
+//       .map((article) => [
+//         article.title,
+//         article.description,
+//         17,
+//         article.urlToImage,
+//       ]);
 
-    const sql = `INSERT INTO blogs (title, content, categoryId, imageUrl) VALUES ?`;
 
-    db.query(sql, [values], (err, result) => {
-      if (err) {
-        console.error("Error inserting batch:", err);
-      } else {
-        console.log(`Batch ${index + 1} inserted successfully!`);
-      }
-    });
-  });
-}
+//     const sql = `INSERT INTO blogs (title, content, categoryId, imageUrl) VALUES ?`;
+
+//     db.query(sql, [values], (err, result) => {
+//       if (err) {
+//         console.error("Error inserting batch:", err);
+//       } else {
+//         console.log(`Batch ${index + 1} inserted successfully!`);
+//       }
+//     });
+//   });
+// }
 
 // Start the server
 app.listen(8800, () => {
